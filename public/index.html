@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Biblioteca</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header><h1>📚 Gestión de Biblioteca</h1></header>
+  <main>
+    <form id="filtros">
+      <input type="search" id="q" placeholder="Buscar por título, autor o ISBN" maxlength="100">
+      <select id="categoria"><option value="">Todas las categorías</option></select>
+      <button type="submit">Buscar</button>
+    </form>
+    <p id="mensaje" role="status"></p>
+    <section id="catalogo" class="grid"></section>
+  </main>
+  <script src="js/catalogo.js"></script>
+</body>
+</html>
