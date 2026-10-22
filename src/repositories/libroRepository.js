@@ -31,4 +31,13 @@ async function obtenerPorId(id) {
     .query(BASE + ' WHERE l.id = @id' + GROUP);
   return r.recordset[0];
 }
-module.exports = { listar, buscar, obtenerPorId };
+async function categorias() {
+  const pool = await getPool();
+  const r = await pool.request().query('SELECT DISTINCT categoria FROM Libros ORDER BY categoria');
+  return r.recordset.map(x => x.categoria);
+}
+
+
+
+
+module.exports = { listar, buscar, obtenerPorId, categorias };
