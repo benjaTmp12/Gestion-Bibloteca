@@ -4,7 +4,10 @@ const q = document.getElementById('q');
 const categoria = document.getElementById('categoria');
 
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-
+async function cargarCategorias() {
+  const cats = await (await fetch('/api/libros/categorias')).json();
+  cats.forEach(c => categoria.add(new Option(c, c)));
+}
 async function cargarLibros() {
   mensaje.textContent = 'Cargando...';
   const params = new URLSearchParams();
@@ -30,4 +33,4 @@ async function cargarLibros() {
 }
 
 document.getElementById('filtros').addEventListener('submit', e => { e.preventDefault(); cargarLibros(); });
-cargarLibros();
+cargarCategorias().then(cargarLibros);
