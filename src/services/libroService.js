@@ -9,6 +9,18 @@ async function listarLibros({ q, categoria }) {
   }
   return texto || categoria ? repo.buscar(texto, categoria) : repo.listar();
 }
-
-module.exports = { listarLibros };
-
+async function obtenerLibro(id) {
+  if (!Number.isInteger(id) || id <= 0) {
+    const err = new Error('ID inválido');
+    err.status = 400;
+    throw err;
+  }
+  const libro = await repo.obtenerPorId(id);
+  if (!libro) {
+    const err = new Error('Libro no encontrado');
+    err.status = 404;
+    throw err;
+  }
+  return libro;
+}
+module.exports = { listarLibros, obtenerLibro };
