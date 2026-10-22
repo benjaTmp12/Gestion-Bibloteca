@@ -9,6 +9,7 @@ async function listarLibros({ q, categoria }) {
   }
   return texto || categoria ? repo.buscar(texto, categoria) : repo.listar();
 }
+
 async function obtenerLibro(id) {
   if (!Number.isInteger(id) || id <= 0) {
     const err = new Error('ID inválido');
@@ -23,4 +24,8 @@ async function obtenerLibro(id) {
   }
   return libro;
 }
-module.exports = { listarLibros, obtenerLibro };
+
+const listarCategorias = () => repo.categorias();
+
+module.exports = { listarLibros, obtenerLibro, listarCategorias };
+
