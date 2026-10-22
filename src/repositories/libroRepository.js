@@ -31,8 +31,4 @@ async function obtenerPorId(id) {
     .query(BASE + ' WHERE l.id = @id' + GROUP);
   return r.recordset[0];
 }
-
-
-
-
-module.exports = { listar };
+module.exports = { listar, buscar, obtenerPorId };
