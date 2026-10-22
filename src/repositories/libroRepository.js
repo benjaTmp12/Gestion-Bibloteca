@@ -25,4 +25,14 @@ async function buscar(texto, categoria) {
   return r.recordset;
 }
 
+async function obtenerPorId(id) {
+  const pool = await getPool();
+  const r = await pool.request().input('id', sql.Int, id)
+    .query(BASE + ' WHERE l.id = @id' + GROUP);
+  return r.recordset[0];
+}
+
+
+
+
 module.exports = { listar };
