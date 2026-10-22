@@ -14,4 +14,15 @@ async function listar() {
   return r.recordset;
 }
 
+async function buscar(texto, categoria) {
+  const pool = await getPool();
+  const r = await pool.request()
+    .input('q', sql.NVarChar, `%${texto || ''}%`)
+    .input('cat', sql.NVarChar, categoria || null)
+    .query(BASE + `
+      WHERE (l.titulo LIKE @q OR l.autor LIKE @q OR l.isbn LIKE @q)
+        AND (@cat IS NULL OR l.categoria = @cat)` + GROUP + ' ORDER BY l.titulo');
+  return r.recordset;
+}
+
 module.exports = { listar };
