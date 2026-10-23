@@ -38,4 +38,11 @@ async function crear(datos, ahora = new Date()) {
     return { ...prestamo, id: prestamoRef.id };
   });
 }
-module.exports = { crear };
+async function listar() {
+  const snapshot = await getDb().collection('prestamos').limit(501).get();
+  if (snapshot.size > 500) {
+    throw new AppError(409, 'LIMITE_MVP', 'El listado supera el límite de 500 préstamos del MVP.');
+  }
+  return snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+}
+module.exports = { crear, listar };

@@ -1,5 +1,5 @@
 const repo = require('../repositories/prestamoRepository');
-const { validarAlta, hoySantiago } = require('./prestamoValidaciones');
+const { validarAlta, validarFiltrosPrestamos, hoySantiago } = require('./prestamoValidaciones');
 
 function instanteISO(valor) {
   if (valor === null) return null;
@@ -23,4 +23,13 @@ async function crearPrestamo(body) {
   const datos = validarAlta(body, ahora);
   return presentar(await repo.crear(datos, ahora), ahora);
 }
-module.exports = { crearPrestamo, presentar };
+async function listarPrestamos(query) {
+  const filtros = validarFiltrosPrestamos(query);
+  const ahora = new Date();
+  return (await repo.listar()).map(prestamo => presentar(prestamo, ahora))
+    .filter(prestamo => (filtros.estado === 'todos' || prestamo.estado === filtros.estado)
+      && (!filtros.libro_id || prestamo.libro_id === filtros.libro_id)
+      && (!filtros.socio_id || prestamo.socio_id === filtros.socio_id))
+    .sort((a, b) => b.fecha_prestamo.localeCompare(a.fecha_prestamo) || b.id.localeCompare(a.id));
+}
+module.exports = { crearPrestamo, listarPrestamos, presentar };

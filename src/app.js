@@ -21,6 +21,7 @@ app.get('/health/db', async (req, res) => {
 
 app.use('/api/libros', libroRoutes);
 app.use('/api/socios', require('./routes/socioRoutes'));
+app.use('/api/prestamos', require('./routes/prestamoRoutes'));
 
 app.use((err, req, res, next) => {
   const status = err.status || 500;
