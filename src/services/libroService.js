@@ -1,8 +1,14 @@
 const repo = require('../repositories/libroRepository');
 
 async function listarLibros({ q, categoria }) {
+  if ((q !== undefined && typeof q !== 'string')
+      || (categoria !== undefined && typeof categoria !== 'string')) {
+    const err = new Error('Los filtros deben ser texto');
+    err.status = 400;
+    throw err;
+  }
   const texto = (q || '').trim();
-  if (texto.length > 100) {
+  if (texto.length > 100 || (categoria || '').length > 80) {
     const err = new Error('La búsqueda no puede superar 100 caracteres');
     err.status = 400;
     throw err;
@@ -11,7 +17,7 @@ async function listarLibros({ q, categoria }) {
 }
 
 async function obtenerLibro(id) {
-  if (!Number.isInteger(id) || id <= 0) {
+  if (typeof id !== 'string' || !/^[A-Za-z0-9_-]{1,128}$/.test(id)) {
     const err = new Error('ID inválido');
     err.status = 400;
     throw err;
