@@ -124,6 +124,7 @@
       actualizado ? 'exito' : 'error');
       document.dispatchEvent(new CustomEvent('prestamo-registrado', { detail: resultado.data }));
     } catch (error) {
+      if (error.status === 409) await cargarOpciones();
       anunciar(error.status ? error.message
         : 'No se pudo confirmar el registro. Consulta el listado antes de volver a intentarlo.', 'error');
     } finally {
