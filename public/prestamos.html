@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Préstamos · Biblioteca</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/prestamos.css">
+</head>
+<body class="pagina-prestamos">
+  <header>
+    <div class="encabezado">
+      <a class="marca" href="/">Biblioteca</a>
+      <nav aria-label="Navegación principal"><a href="/">Catálogo</a><a href="prestamos.html" aria-current="page">Préstamos</a></nav>
+    </div>
+  </header>
+  <main>
+    <div class="titulo-pagina">
+      <div><p class="eyebrow">Gestión de biblioteca</p><h1>Préstamos</h1><p>Registra la entrega de un libro a un socio.</p></div>
+      <button id="actualizar-opciones" type="button" class="secundario">Actualizar opciones</button>
+    </div>
+    <div class="distribucion">
+      <section class="panel" aria-labelledby="titulo-nuevo">
+        <h2 id="titulo-nuevo">Nuevo préstamo</h2>
+        <p class="texto-suave">Selecciona un libro disponible y un socio activo.</p>
+        <form id="form-prestamo">
+          <div class="campo">
+            <label for="libro">Libro</label>
+            <select id="libro" name="libro_id" required disabled aria-describedby="disponibilidad">
+              <option value="">Cargando libros…</option>
+            </select>
+            <p id="disponibilidad" class="ayuda" aria-live="polite">Consultando disponibilidad.</p>
+          </div>
+          <div class="campo">
+            <label for="socio">Socio</label>
+            <select id="socio" name="socio_id" required disabled><option value="">Cargando socios…</option></select>
+          </div>
+          <div class="campo">
+            <label for="fecha-vencimiento">Fecha de vencimiento</label>
+            <input type="date" id="fecha-vencimiento" name="fecha_vencimiento" required>
+            <p class="ayuda">Se propone un plazo de 14 días. Puedes elegir otra fecha posterior a hoy.</p>
+          </div>
+          <button id="registrar" type="submit" disabled>Registrar préstamo</button>
+        </form>
+        <p id="mensaje-prestamo" class="mensaje" role="status" aria-live="polite"></p>
+      </section>
+      <aside class="panel detalle">
+        <p class="eyebrow">Antes de registrar</p>
+        <h2>Comprueba los datos</h2>
+        <ul>
+          <li>El libro debe tener al menos una copia disponible.</li>
+          <li>El socio debe estar activo.</li>
+          <li>La fecha de vencimiento debe ser posterior a hoy.</li>
+        </ul>
+        <p class="texto-suave">La disponibilidad se vuelve a comprobar al guardar el préstamo.</p>
+      </aside>
+    </div>
+  </main>
+  <script src="js/prestamos.js"></script>
+</body>
+</html>
