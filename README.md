@@ -38,8 +38,8 @@ npm run dev
 ```
 
 Abrir el catálogo en `http://localhost:3000/` y el módulo de Benja en
-`http://localhost:3000/prestamos.html`. El catálogo original no agrega un menú
-nuevo; la pantalla de préstamos sí permite volver a él.
+`http://localhost:3000/prestamos.html`. Ambas pantallas incluyen enlaces de
+navegación para ir del catálogo a préstamos y volver.
 
 El seed crea cinco libros y tres socios ficticios (dos activos y uno inactivo).
 No borra préstamos ni sobrescribe documentos existentes. Al cerrar el emulador,
