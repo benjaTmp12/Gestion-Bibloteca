@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { getPool } = require('./db/connection');
+const { getDb } = require('./db/connection');
 const libroRoutes = require('./routes/libroRoutes');
 
 const app = express();
@@ -11,11 +11,11 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 app.get('/health/db', async (req, res) => {
   try {
-    const pool = await getPool();
-    const r = await pool.request().query('SELECT COUNT(*) AS libros FROM Libros');
-    res.json({ status: 'ok', libros: r.recordset[0].libros });
+    await getDb().collection('libros').limit(1).get();
+    res.json({ status: 'ok', base: 'firestore' });
   } catch (e) {
-    res.status(500).json({ status: 'error', message: e.message });
+    console.error('No se pudo comprobar Firestore:', e.code || e.name);
+    res.status(503).json({ status: 'error', message: 'Base de datos no disponible' });
   }
 });
 

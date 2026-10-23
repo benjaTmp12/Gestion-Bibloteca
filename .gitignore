@@ -1,2 +1,10 @@
 node_modules/
 .env
+.env.*
+!.env.example
+secrets/
+*-adminsdk-*.json
+firebase-debug.log*
+firestore-debug.log*
+.firebase/
+.emulator-data/
