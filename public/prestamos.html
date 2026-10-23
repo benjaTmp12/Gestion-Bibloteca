@@ -63,7 +63,7 @@
         <button id="consultar-prestamos" type="submit" class="secundario">Consultar</button>
       </form>
       <p id="mensaje-listado" class="texto-suave" role="status" aria-live="polite">Consultando préstamos…</p>
-      <div class="tabla-contenedor" id="contenedor-tabla" hidden>
+      <div class="tabla-contenedor" id="contenedor-tabla" tabindex="0" role="region" aria-label="Tabla de préstamos con desplazamiento horizontal" hidden>
         <table><caption class="solo-lectores">Préstamos que coinciden con los filtros</caption><thead><tr><th scope="col">Libro</th><th scope="col">Socio</th><th scope="col">Préstamo</th><th scope="col">Vencimiento</th><th scope="col">Estado</th></tr></thead><tbody id="filas-prestamos"></tbody></table>
       </div>
     </section>
