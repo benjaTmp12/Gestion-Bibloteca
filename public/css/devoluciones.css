@@ -1,0 +1,5 @@
+.pagina-devoluciones .panel-listado { margin-top: 0; }
+.pagina-devoluciones .mensaje { margin: 0 0 1rem; }
+.pagina-devoluciones .panel-listado table { min-width: 850px; }
+.pagina-devoluciones td:last-child { white-space: nowrap; }
+.pagina-devoluciones .boton-devolver { padding: .5rem .75rem; }

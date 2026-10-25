@@ -1,6 +1,6 @@
 .pagina-prestamos { color: #243448; background: #f5f6f8; line-height: 1.5; }
 .pagina-prestamos header { padding: .85rem 1.5rem; text-align: left; border-bottom: 1px solid #142d4d; }
-.encabezado { max-width: 1048px; margin: auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.encabezado { max-width: 1048px; margin: auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
 .marca { font-size: 1.2rem; font-weight: 700; text-decoration: none; color: white; }
 .encabezado nav { display: flex; gap: 1.25rem; }
 .encabezado nav a { color: #e1eaf4; text-decoration: none; padding: .35rem 0; }
