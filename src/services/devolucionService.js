@@ -1,5 +1,7 @@
 const { validarId } = require('./prestamoValidaciones');
 const AppError = require('../utils/appError');
+const repo = require('../repositories/devolucionRepository');
+const { presentar } = require('./prestamoService');
 
 function validarDevolucion(id, body) {
   validarId(id, 'id');
@@ -11,4 +13,9 @@ function validarDevolucion(id, body) {
   return id;
 }
 
-module.exports = { validarDevolucion };
+async function devolverPrestamo(id, body) {
+  validarDevolucion(id, body);
+  return presentar(await repo.devolver(id));
+}
+
+module.exports = { validarDevolucion, devolverPrestamo };
