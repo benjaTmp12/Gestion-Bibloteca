@@ -5,6 +5,9 @@
   const listado = document.getElementById('mensaje-listado');
   const filas = document.getElementById('filas-devoluciones');
   const contenedor = document.getElementById('contenedor-tabla');
+  const filtro = document.getElementById('estado-devoluciones');
+  const titulo = document.getElementById('titulo-devoluciones');
+  const columna = document.getElementById('columna-devolucion');
   let cargando = false;
   let enviando = false;
   let solicitud = 0;
@@ -13,6 +16,9 @@
     timeZone: 'America/Santiago', dateStyle: 'short'
   }).format(new Date(fecha));
   const calendario = fecha => fecha.split('-').reverse().join('/');
+  const instante = fecha => new Intl.DateTimeFormat('es-CL', {
+    timeZone: 'America/Santiago', dateStyle: 'short', timeStyle: 'short'
+  }).format(new Date(fecha));
 
   function anunciar(texto, tipo = '') {
     mensaje.textContent = texto;
@@ -21,6 +27,7 @@
   function actualizarBotones() {
     const ocupado = cargando || enviando;
     actualizar.disabled = ocupado;
+    filtro.disabled = ocupado;
     contenedor.setAttribute('aria-busy', String(ocupado));
     filas.querySelectorAll('button').forEach(boton => { boton.disabled = ocupado; });
   }
@@ -52,20 +59,24 @@
       libro.append(referencia);
       const estado = celda('');
       const etiqueta = document.createElement('span');
-      etiqueta.className = 'estado-prestamo ' + (registro.vencido ? 'vencido' : 'activo');
-      etiqueta.textContent = registro.vencido ? 'Vencido' : 'Activo';
+      const devuelto = registro.estado === 'devuelto';
+      const tipo = devuelto ? 'devuelto' : registro.vencido ? 'vencido' : 'activo';
+      etiqueta.className = 'estado-prestamo ' + tipo;
+      etiqueta.textContent = { activo: 'Activo', vencido: 'Vencido', devuelto: 'Devuelto' }[tipo];
       estado.append(etiqueta);
       const ejemplar = catalogo.get(registro.libro_id);
       const disponibles = ejemplar ? (ejemplar.copias_disponibles ?? ejemplar.disponibles)
         + ' de ' + ejemplar.copias_total + ' copias' : 'Libro no disponible';
-      const accion = celda('');
-      const boton = document.createElement('button');
-      boton.type = 'button';
-      boton.className = 'boton-devolver';
-      boton.textContent = 'Devolver';
-      boton.setAttribute('aria-label', 'Devolver ' + registro.libro_titulo + ' de ' + registro.socio_nombre);
-      boton.addEventListener('click', () => devolver(registro, boton));
-      accion.append(boton);
+      const accion = celda(devuelto ? instante(registro.fecha_devolucion) : '');
+      if (!devuelto) {
+        const boton = document.createElement('button');
+        boton.type = 'button';
+        boton.className = 'boton-devolver';
+        boton.textContent = 'Devolver';
+        boton.setAttribute('aria-label', 'Devolver ' + registro.libro_titulo + ' de ' + registro.socio_nombre);
+        boton.addEventListener('click', () => devolver(registro, boton));
+        accion.append(boton);
+      }
       tr.append(libro, celda(registro.socio_nombre), celda(dia(registro.fecha_prestamo)),
         celda(calendario(registro.fecha_vencimiento)), estado, celda(disponibles), accion);
       filas.append(tr);
@@ -75,20 +86,26 @@
   }
   async function cargar() {
     const actual = ++solicitud;
+    const historial = filtro.value === 'devuelto';
     cargando = true;
     actualizarBotones();
     listado.textContent = 'Consultando préstamos y disponibilidad…';
     try {
       const [resultado, libros] = await Promise.all([
-        pedir('/api/prestamos?estado=activo'), pedir('/api/libros')
+        pedir('/api/prestamos?' + new URLSearchParams({ estado: filtro.value })), pedir('/api/libros')
       ]);
       if (actual !== solicitud) return false;
       if (!Array.isArray(resultado.data) || !Array.isArray(libros)) {
         throw new Error('Respuesta de datos inválida.');
       }
-      dibujar(resultado.data, libros);
-      listado.textContent = resultado.data.length ? resultado.data.length + ' préstamo(s) activo(s).'
-        : 'No hay préstamos activos pendientes de devolución.';
+      const registros = historial ? resultado.data.sort((a, b) =>
+        b.fecha_devolucion.localeCompare(a.fecha_devolucion) || b.id.localeCompare(a.id)) : resultado.data;
+      titulo.textContent = historial ? 'Historial de devoluciones' : 'Préstamos activos';
+      columna.textContent = historial ? 'Devolución (Santiago)' : 'Acción';
+      dibujar(registros, libros);
+      listado.textContent = registros.length ? registros.length
+        + (historial ? ' devolución(es) registrada(s).' : ' préstamo(s) activo(s).')
+        : historial ? 'Todavía no hay devoluciones registradas.' : 'No hay préstamos activos pendientes de devolución.';
       return true;
     } catch (error) {
       if (actual !== solicitud) return false;
@@ -129,5 +146,6 @@
     }
   }
   actualizar.addEventListener('click', () => { anunciar(''); cargar(); });
+  filtro.addEventListener('change', () => { anunciar(''); cargar(); });
   cargar();
 })();

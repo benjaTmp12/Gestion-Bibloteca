@@ -22,7 +22,10 @@
     </div>
     <section class="panel panel-listado" aria-labelledby="titulo-devoluciones">
       <h2 id="titulo-devoluciones">Préstamos activos</h2>
-      <p class="texto-suave">Comprueba el libro y el socio antes de registrar la devolución.</p>
+      <p class="texto-suave">Comprueba los préstamos pendientes o consulta las devoluciones registradas.</p>
+      <div class="filtros-listado">
+        <div class="campo"><label for="estado-devoluciones">Mostrar</label><select id="estado-devoluciones"><option value="activo">Préstamos activos</option><option value="devuelto">Historial de devoluciones</option></select></div>
+      </div>
       <p id="mensaje-devolucion" class="mensaje" role="status" aria-live="polite"></p>
       <p id="mensaje-listado" class="texto-suave" role="status" aria-live="polite">Consultando préstamos…</p>
       <div class="tabla-contenedor" id="contenedor-tabla" tabindex="0" role="region" aria-label="Tabla de devoluciones con desplazamiento horizontal" hidden>
