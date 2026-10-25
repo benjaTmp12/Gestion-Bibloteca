@@ -104,7 +104,8 @@ Al superar los límites, la API avisa en lugar de entregar listados incompletos.
 npm test
 ```
 
-Ejecuta las validaciones sin servicios cloud. Con el emulador iniciado:
+Ejecuta las validaciones y las pruebas de interfaz con jsdom sin servicios cloud.
+Con el emulador iniciado:
 
 ```powershell
 npm run test:firestore

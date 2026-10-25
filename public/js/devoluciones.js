@@ -17,7 +17,7 @@
   }).format(new Date(fecha));
   const calendario = fecha => fecha.split('-').reverse().join('/');
   const instante = fecha => new Intl.DateTimeFormat('es-CL', {
-    timeZone: 'America/Santiago', dateStyle: 'short', timeStyle: 'short'
+    timeZone: 'America/Santiago', dateStyle: 'short', timeStyle: 'short', hour12: false
   }).format(new Date(fecha));
 
   function anunciar(texto, tipo = '') {
