@@ -5,7 +5,7 @@ const listar = async (req, res, next) => {
 };
 
 const obtener = async (req, res, next) => {
-  try { res.json(await service.obtenerLibro(parseInt(req.params.id, 10))); } catch (e) { next(e); }
+  try { res.json(await service.obtenerLibro(req.params.id)); } catch (e) { next(e); }
 };
 
 const categorias = async (req, res, next) => {

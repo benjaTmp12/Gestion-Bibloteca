@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Devoluciones · Biblioteca</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/prestamos.css">
+  <link rel="stylesheet" href="css/devoluciones.css">
+</head>
+<body class="pagina-prestamos pagina-devoluciones">
+  <header>
+    <div class="encabezado">
+      <a class="marca" href="/">Biblioteca</a>
+      <nav aria-label="Navegación principal"><a href="/">Catálogo</a><a href="prestamos.html">Préstamos</a><a href="devoluciones.html" aria-current="page">Devoluciones</a></nav>
+    </div>
+  </header>
+  <main>
+    <div class="titulo-pagina">
+      <div><p class="eyebrow">Gestión de biblioteca</p><h1>Devoluciones</h1><p>Registra el regreso de un libro y recupera su disponibilidad.</p></div>
+      <button id="actualizar-devoluciones" type="button" class="secundario">Actualizar listado</button>
+    </div>
+    <section class="panel panel-listado" aria-labelledby="titulo-devoluciones">
+      <h2 id="titulo-devoluciones">Préstamos activos</h2>
+      <p class="texto-suave">Comprueba los préstamos pendientes o consulta las devoluciones registradas.</p>
+      <div class="filtros-listado">
+        <div class="campo"><label for="estado-devoluciones">Mostrar</label><select id="estado-devoluciones"><option value="activo">Préstamos activos</option><option value="devuelto">Historial de devoluciones</option></select></div>
+      </div>
+      <p id="mensaje-devolucion" class="mensaje" role="status" aria-live="polite"></p>
+      <p id="mensaje-listado" class="texto-suave" role="status" aria-live="polite">Consultando préstamos…</p>
+      <div class="tabla-contenedor" id="contenedor-tabla" tabindex="0" role="region" aria-label="Tabla de devoluciones con desplazamiento horizontal" hidden>
+        <table><caption class="solo-lectores">Préstamos y disponibilidad actual de sus libros</caption><thead><tr><th scope="col">Libro</th><th scope="col">Socio</th><th scope="col">Préstamo</th><th scope="col">Vencimiento</th><th scope="col">Estado</th><th scope="col">Disponibilidad</th><th scope="col" id="columna-devolucion">Acción</th></tr></thead><tbody id="filas-devoluciones"></tbody></table>
+      </div>
+    </section>
+  </main>
+  <script src="js/devoluciones.js"></script>
+</body>
+</html>

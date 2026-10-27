@@ -7,7 +7,14 @@
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <header><h1>📚 Gestión de Biblioteca</h1></header>
+  <header>
+    <h1>📚 Gestión de Biblioteca</h1>
+    <nav class="navegacion" aria-label="Navegación principal">
+      <a href="/" aria-current="page">Catálogo</a>
+      <a href="/prestamos.html">Préstamos</a>
+      <a href="/devoluciones.html">Devoluciones</a>
+    </nav>
+  </header>
   <main>
     <form id="filtros">
       <input type="search" id="q" placeholder="Buscar por título, autor o ISBN" maxlength="100">
