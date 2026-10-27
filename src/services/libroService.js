@@ -33,5 +33,9 @@ async function obtenerLibro(id) {
 
 const listarCategorias = () => repo.categorias();
 
-module.exports = { listarLibros, obtenerLibro, listarCategorias };
+const { validarLibro, validarId } = require('./libroValidaciones');
+const crearLibro = body => repo.guardar(validarLibro(body));
+const actualizarLibro = (id, body) => repo.guardar(validarLibro(body), validarId(id));
+const eliminarLibro = id => repo.eliminar(validarId(id));
+module.exports = { listarLibros, obtenerLibro, listarCategorias, crearLibro, actualizarLibro, eliminarLibro };
 
