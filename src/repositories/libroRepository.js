@@ -52,6 +52,12 @@ async function guardar(datos, id) {
   await db.runTransaction(async tx => {
     const actual = await tx.get(ref);
     if (id && !actual.exists) throw new AppError(404, 'LIBRO_NO_ENCONTRADO', 'El libro no existe.');
+    if (!id) {
+      const catalogo = await tx.get(db.collection('libros').limit(LIMITE_CATALOGO));
+      if (catalogo.size >= LIMITE_CATALOGO) {
+        throw new AppError(409, 'LIMITE_MVP', 'El catálogo admite hasta 100 libros en este MVP.');
+      }
+    }
     const reserva = db.collection('isbns').doc(datos.isbn);
     const reservado = await tx.get(reserva);
     const coincidencias = await tx.get(db.collection('libros').where('isbn', '==', datos.isbn).limit(2));

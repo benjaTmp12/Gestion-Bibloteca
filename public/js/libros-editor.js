@@ -56,10 +56,12 @@
       operacion.textContent = idActual ? 'Libro actualizado.' : 'Libro creado.';
       editor.hidden = true;
       await refrescar();
-      document.getElementById('nuevo-libro').focus();
     } catch (error) { estado.textContent = error instanceof TypeError
       ? 'No se pudo confirmar el guardado. Consulta el catálogo antes de reintentar.' : error.message; }
-    finally { bloquear(false); }
+    finally {
+      bloquear(false);
+      if (editor.hidden) document.getElementById('nuevo-libro').focus();
+    }
   });
   catalogo.addEventListener('click', async e => {
     const boton = e.target.closest('button');

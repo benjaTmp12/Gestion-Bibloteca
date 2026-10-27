@@ -4,6 +4,22 @@
 - `GET /api/libros/categorias` → categorías disponibles
 - `GET /api/libros/:id` → detalle de un libro (400 si el id es inválido, 404 si no existe)
 
+### Administración de libros
+
+Desde Catálogo se puede crear un libro, editarlo y eliminarlo con confirmación.
+`POST /api/libros` crea (201); `PUT /api/libros/:id` reemplaza los campos editables
+(200); `DELETE /api/libros/:id` elimina (204). Las escrituras devuelven `{ data: libro }`
+y los errores el formato `{ error: { codigo, mensaje } }`.
+Campos: `titulo`, `autor`, `isbn`, `categoria`, `anio` (entero o null) y
+`copias_total`. El servidor conserva el contador interno de préstamos.
+ISBN se normaliza quitando espacios y guiones; admite 10 o 13 caracteres,
+sin comprobar el dígito de control. La reserva en `isbns` evita duplicados
+concurrentes y se comprueban también los libros de ejemplo anteriores.
+No se admiten menos copias que las prestadas ni eliminar libros con historial,
+incluidos préstamos ya devueltos. Para demostrar eliminación, crear un libro
+de prueba sin préstamos. El límite de catálogo es 100 libros.
+Las pruebas CRUD usan exclusivamente el emulador local.
+
 ## Préstamos de Benja y base Firestore
 
 Se reemplazó el acceso SQL del catálogo por Firestore. La pantalla original de
