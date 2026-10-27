@@ -8,7 +8,7 @@
 </head>
 <body>
   <header>
-    <h1>📚 Gestión de Biblioteca</h1>
+    <a class="marca" href="/">Biblioteca</a>
     <nav class="navegacion" aria-label="Navegación principal">
       <a href="/" aria-current="page">Catálogo</a>
       <a href="/prestamos.html">Préstamos</a>
@@ -16,14 +16,33 @@
     </nav>
   </header>
   <main>
+    <div class="titulo-pagina"><div><p class="etiqueta">GESTIÓN DE BIBLIOTECA</p><h1>Catálogo</h1><p>Consulta la disponibilidad y administra los libros.</p></div><button id="nuevo-libro" type="button">Nuevo libro</button></div>
+    <section id="editor" class="card" hidden aria-labelledby="titulo-editor">
+      <h2 id="titulo-editor">Nuevo libro</h2>
+      <form id="form-libro">
+        <div class="campos-libro">
+          <label>Título<input name="titulo" required maxlength="200"></label>
+          <label>Autor<input name="autor" required maxlength="150"></label>
+          <label>ISBN<input name="isbn" required maxlength="25" placeholder="10 o 13 caracteres"></label>
+          <label>Categoría<input name="categoria" required maxlength="80"></label>
+          <label>Año (opcional)<input name="anio" type="number" min="1" step="1"></label>
+          <label>Copias totales<input name="copias_total" type="number" min="0" max="10000" step="1" required value="1"></label>
+        </div>
+        <p>Las copias prestadas se conservan al editar. Los libros con historial de préstamos no se pueden eliminar.</p>
+        <div class="acciones"><button type="submit" id="guardar-libro">Guardar libro</button><button type="button" id="cancelar-libro" class="secundario">Cancelar</button></div>
+        <p id="estado-editor" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+    <p id="operacion" role="status" aria-live="polite"></p>
     <form id="filtros">
-      <input type="search" id="q" placeholder="Buscar por título, autor o ISBN" maxlength="100">
-      <select id="categoria"><option value="">Todas las categorías</option></select>
+      <input type="search" id="q" aria-label="Buscar libros" placeholder="Buscar por título, autor o ISBN" maxlength="100">
+      <select id="categoria" aria-label="Filtrar por categoría"><option value="">Todas las categorías</option></select>
       <button type="submit">Buscar</button>
     </form>
     <p id="mensaje" role="status"></p>
     <section id="catalogo" class="grid"></section>
   </main>
   <script src="js/catalogo.js"></script>
+  <script src="js/libros-editor.js"></script>
 </body>
 </html>
